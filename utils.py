@@ -6,17 +6,20 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from trulens_eval import Feedback, TruLlama
 from trulens_eval.feedback import GroundTruthAgreement
 
-from llama_index import ServiceContext, VectorStoreIndex, StorageContext, load_index_from_storage
-from llama_index.node_parser import SentenceWindowNodeParser, HierarchicalNodeParser, get_leaf_nodes
-from llama_index.indices.postprocessor import MetadataReplacementPostProcessor, SentenceTransformerRerank
-from llama_index.retrievers import AutoMergingRetriever
-from llama_index.query_engine import RetrieverQueryEngine
+from llama_index.core import ServiceContext, VectorStoreIndex, StorageContext, load_index_from_storage
+from llama_index.core.node_parser import SentenceWindowNodeParser, HierarchicalNodeParser, get_leaf_nodes
+from llama_index.core.postprocessor import MetadataReplacementPostProcessor, SentenceTransformerRerank
+from llama_index.core.retrievers import AutoMergingRetriever
+from llama_index.core.query_engine import RetrieverQueryEngine
 
 nest_asyncio.apply()
 
 # Load local LLaMA model
-model_path = "path/to/your/llama3.3-model"  # Update this path
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+#model_path = r"/home/ajai-krishna/Documents/llama_model/model"  # Update this path
+model_path = r"/home/ajai-krishna/data/models"
+model_name = "meta-llama/Llama-3.3-70B-Instruct"
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_path)
 llama_pipeline = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
